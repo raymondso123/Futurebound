@@ -6,10 +6,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * 
  */
 public class Player extends Actor {
-    private static final int def = 14; //default
-    private static final int thresL = 7;
-    private static final int thresR = 21;
-    private int s = 1; //speed
+    private static final int def = 14; //default frame
+    private static final int thresL = 10;
+    private static final int thresR = 18;
+    private int s = 3; //speed
     private GreenfootImage[] sprites;
     private int currentSpriteIndex;
     private boolean l = false; //left
@@ -42,6 +42,7 @@ public class Player extends Actor {
             r = true;
             l = false;
             tweening = false;
+            move(s);
             if (currentSpriteIndex > thresL) {
                 currentSpriteIndex -= 1;
                 if (currentSpriteIndex < 0) currentSpriteIndex = sprites.length - 1;
@@ -50,6 +51,7 @@ public class Player extends Actor {
             l = true;
             r = false;
             tweening = false;
+            move(-s);
             if (currentSpriteIndex < thresR) {
                 currentSpriteIndex += 1;
                 if (currentSpriteIndex >= sprites.length) currentSpriteIndex = 0;
@@ -78,7 +80,7 @@ public class Player extends Actor {
             } else if (currentSpriteIndex > def) {
                 currentSpriteIndex--;
                 if (currentSpriteIndex <= def) {
-                    currentSpriteIndex = def;
+                    currentSpriteIndex = def-1;
                     tweening = false;
                 }
             }
