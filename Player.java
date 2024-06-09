@@ -6,22 +6,24 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * 
  */
 public class Player extends Actor {
-    private static final int DEFAULT_FRAME = 14;
-    private int speed = 3;
-    private int turnSpeed = 5;
+    private static final int def = 14; //default
+    private static final int thresL = 7;
+    private static final int thresR = 21;
+    private int s = 1; //speed
     private GreenfootImage[] sprites;
     private int currentSpriteIndex;
-    private boolean turningLeft = false;
-    private boolean turningRight = false;
+    private boolean l = false; //left
+    private boolean r = false;
+    private boolean tweening = false;
 
     public Player() {
-        // Load all 53 sprites and resize them
+        // Load all 53 sprites and resize them to half their original size
         sprites = new GreenfootImage[53];
         for (int i = 0; i < sprites.length; i++) {
             sprites[i] = new GreenfootImage("Vehicles-Sprites/PLAYER/" + i + ".png");
-            sprites[i].scale(50, 30); // Resize the car, adjust the size as needed
+            sprites[i].scale(sprites[i].getWidth() / 2, sprites[i].getHeight() / 2);
         }
-        currentSpriteIndex = DEFAULT_FRAME;
+        currentSpriteIndex = def;
         setImage(sprites[currentSpriteIndex]);
     }
 
@@ -31,32 +33,56 @@ public class Player extends Actor {
      */
     public void act() {
         handleInput();
-        updateSprite();
+        update();
+        tween();
     }
 
     private void handleInput() {
-        if (Greenfoot.isKeyDown("left")) {
-            turningLeft = true;
-            turningRight = false;
-            currentSpriteIndex -= 1;
-            if (currentSpriteIndex < 0) currentSpriteIndex = sprites.length - 1;
-        } else if (Greenfoot.isKeyDown("right")) {
-            turningRight = true;
-            turningLeft = false;
-            currentSpriteIndex += 1;
-            if (currentSpriteIndex >= sprites.length) currentSpriteIndex = 0;
+        if (Greenfoot.isKeyDown("right")) {
+            r = true;
+            l = false;
+            tweening = false;
+            if (currentSpriteIndex > thresL) {
+                currentSpriteIndex -= 1;
+                if (currentSpriteIndex < 0) currentSpriteIndex = sprites.length - 1;
+            }
+        } else if (Greenfoot.isKeyDown("left")) {
+            l = true;
+            r = false;
+            tweening = false;
+            if (currentSpriteIndex < thresR) {
+                currentSpriteIndex += 1;
+                if (currentSpriteIndex >= sprites.length) currentSpriteIndex = 0;
+            }
         } else {
-            // If no key is pressed, return to default state
-            if (turningLeft || turningRight) {
-                turningLeft = false;
-                turningRight = false;
-                currentSpriteIndex = DEFAULT_FRAME;
+            if (l || r) {
+                l = false;
+                r = false;
+                tweening = true;
             }
         }
     }
 
-    private void updateSprite() {
-        // Update the car's sprite based on the current direction
+    private void update() {
         setImage(sprites[currentSpriteIndex]);
+    }
+
+    private void tween() {
+        if (tweening) {
+            if (currentSpriteIndex < def) {
+                currentSpriteIndex++;
+                if (currentSpriteIndex >= def) {
+                    currentSpriteIndex = def;
+                    tweening = false;
+                }
+            } else if (currentSpriteIndex > def) {
+                currentSpriteIndex--;
+                if (currentSpriteIndex <= def) {
+                    currentSpriteIndex = def;
+                    tweening = false;
+                }
+            }
+            setImage(sprites[currentSpriteIndex]);
+        }
     }
 }
