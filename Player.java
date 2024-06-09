@@ -6,18 +6,22 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * 
  */
 public class Player extends Actor {
+    private static final int DEFAULT_FRAME = 14;
     private int speed = 3;
     private int turnSpeed = 5;
     private GreenfootImage[] sprites;
     private int currentSpriteIndex;
+    private boolean turningLeft = false;
+    private boolean turningRight = false;
 
     public Player() {
-        // Load all 53 sprites
+        // Load all 53 sprites and resize them
         sprites = new GreenfootImage[53];
         for (int i = 0; i < sprites.length; i++) {
             sprites[i] = new GreenfootImage("Vehicles-Sprites/PLAYER/" + i + ".png");
+            sprites[i].scale(50, 30); // Resize the car, adjust the size as needed
         }
-        currentSpriteIndex = 0;
+        currentSpriteIndex = DEFAULT_FRAME;
         setImage(sprites[currentSpriteIndex]);
     }
 
@@ -32,27 +36,27 @@ public class Player extends Actor {
 
     private void handleInput() {
         if (Greenfoot.isKeyDown("left")) {
+            turningLeft = true;
+            turningRight = false;
             currentSpriteIndex -= 1;
             if (currentSpriteIndex < 0) currentSpriteIndex = sprites.length - 1;
-        }
-        if (Greenfoot.isKeyDown("right")) {
+        } else if (Greenfoot.isKeyDown("right")) {
+            turningRight = true;
+            turningLeft = false;
             currentSpriteIndex += 1;
             if (currentSpriteIndex >= sprites.length) currentSpriteIndex = 0;
-        }
-        if (Greenfoot.isKeyDown("up")) {
-            speed += 1;
-        }
-        if (Greenfoot.isKeyDown("down")) {
-            speed -= 1;
+        } else {
+            // If no key is pressed, return to default state
+            if (turningLeft || turningRight) {
+                turningLeft = false;
+                turningRight = false;
+                currentSpriteIndex = DEFAULT_FRAME;
+            }
         }
     }
 
     private void updateSprite() {
         // Update the car's sprite based on the current direction
         setImage(sprites[currentSpriteIndex]);
-    }
-
-    public int getSpeed() {
-        return speed;
     }
 }

@@ -10,6 +10,4 @@ comment3.params=
 comment3.target=void\ handleInput()
 comment4.params=
 comment4.target=void\ updateSprite()
-comment5.params=
-comment5.target=int\ getSpeed()
-numComments=6
+numComments=5
