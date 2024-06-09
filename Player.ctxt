@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Player
-comment0.text=\n\ Player\ class\ -\ represents\ the\ player's\ car.\n\ Handles\ user\ input,\ movement,\ speed,\ collision\ detection,\ and\ costume\ changes.\n\ \n
+comment0.text=\n\ Player\ class\ -\ represents\ the\ player's\ car.\n\ Handles\ user\ input,\ speed,\ collision\ detection,\ and\ costume\ changes.\n\ \n
 comment1.params=
 comment1.target=Player()
 comment2.params=
@@ -9,9 +9,7 @@ comment2.text=\n\ Act\ -\ do\ whatever\ the\ Player\ wants\ to\ do.\ This\ metho
 comment3.params=
 comment3.target=void\ handleInput()
 comment4.params=
-comment4.target=void\ updatePosition()
+comment4.target=void\ updateSprite()
 comment5.params=
-comment5.target=void\ checkCollision()
-comment6.params=
-comment6.target=void\ updateSprite()
-numComments=7
+comment5.target=int\ getSpeed()
+numComments=6

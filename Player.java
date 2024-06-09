@@ -2,13 +2,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
  * Player class - represents the player's car.
- * Handles user input, movement, speed, collision detection, and costume changes.
+ * Handles user input, speed, collision detection, and costume changes.
  * 
  */
 public class Player extends Actor {
     private int speed = 3;
     private int turnSpeed = 5;
-    private int carX, carY;
     private GreenfootImage[] sprites;
     private int currentSpriteIndex;
 
@@ -27,16 +26,8 @@ public class Player extends Actor {
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act() {
-        if (getWorld() != null) {
-            if (carX == 0 && carY == 0) {
-                carX = getX();
-                carY = getY();
-            }
-            handleInput();
-            updatePosition();
-            checkCollision();
-            updateSprite();
-        }
+        handleInput();
+        updateSprite();
     }
 
     private void handleInput() {
@@ -56,30 +47,12 @@ public class Player extends Actor {
         }
     }
 
-    private void updatePosition() {
-        // Calculate the movement based on the current sprite index and speed
-        double angle = currentSpriteIndex * (360.0 / 53); // Convert index to angle
-        double radian = Math.toRadians(angle);
-
-        int deltaX = (int) (speed * Math.cos(radian));
-        int deltaY = (int) (speed * Math.sin(radian));
-
-        carX += deltaX;
-        carY += deltaY;
-
-        setLocation(carX, carY);
-    }
-
-    private void checkCollision() {
-        /*
-        if (isTouching(Obstacle.class)) {
-            Greenfoot.stop();  // End game
-        }
-        */
-    }
-
     private void updateSprite() {
         // Update the car's sprite based on the current direction
         setImage(sprites[currentSpriteIndex]);
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 }
