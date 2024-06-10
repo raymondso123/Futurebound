@@ -17,9 +17,9 @@ public class Grass extends Actor
         if (isAtEdge()) {
             if (MyWorld.turning == true) {
                 if (this.getX() > (int)(getWorld().getWidth()/2) && MyWorld.dist > 0) {
-                    getWorld().removeObject(this);
+                    this.setLocation(0,getWorld().getHeight()-140);
                 } else if (this.getX() < (int)(getWorld().getWidth()/2) && MyWorld.dist < 0) {
-                    getWorld().removeObject(this);
+                    this.setLocation(599,getWorld().getHeight()-140);
                 }
             }
         }

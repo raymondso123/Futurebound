@@ -7,9 +7,9 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Player extends Actor {
     private static final int def = 14; //default frame
-    private static final int thresL = 10;
-    private static final int thresR = 18;
-    private int s = 3; //speed
+    private static final int thresL = 7; // 10 threshold min
+    private static final int thresR = 21; // 18 threshold min
+    private int s = 1; //speed
     private GreenfootImage[] sprites;
     private int currentSpriteIndex;
     private boolean l = false; //left

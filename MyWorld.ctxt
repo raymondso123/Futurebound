@@ -4,5 +4,5 @@ comment0.text=\n\ Write\ a\ description\ of\ class\ MyWorld\ here.\n\ \n\ @autho
 comment1.params=
 comment1.target=MyWorld()
 comment2.params=
-comment2.target=void\ genGrass()
+comment2.target=void\ act()
 numComments=3
