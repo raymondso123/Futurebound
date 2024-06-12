@@ -21,21 +21,18 @@ public class MyWorld extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1);
+        int grassOffset = 100;
         
         //left
         for (int i = 0; i < 29; i++) {
             Grass g = new Grass();
-            if ((int)(i*5+i*i*0.5*(turning?1:0)*dist) > 1) {
-                addObject(g, (int)(i*5+i*i*0.5*(turning?1:0)*dist), getHeight() - i*5);
-            }
+            addObject(g, 0+grassOffset, getHeight() - i*5);
         }
         
         //right
         for (int i = 0; i < 29; i++) {
             Grass g = new Grass();
-            if ((int)(getWidth()-i*5+i*i*0.5*(turning?1:0)*dist) < getWidth()-1) {
-                addObject(g, (int)(getWidth()-i*5+i*i*0.5*(turning?1:0)*dist), getHeight()-i*5);
-            }
+            addObject(g, getWidth()-grassOffset, getHeight()-i*5);
         }
         
         Player plr = new Player();

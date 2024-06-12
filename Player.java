@@ -6,15 +6,17 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * 
  */
 public class Player extends Actor {
-    private static final int def = 14; //default frame
-    private static final int thresL = 7; // 10 threshold min
-    private static final int thresR = 21; // 18 threshold min
-    private int s = 1; //speed
+    private static final int def = 14; // Default frame when not turning
+    private static final int initDef = 14; // Initial default frame
+    private static final int thresL = 7; // Left turn threshold min
+    private static final int thresR = 21; // Right turn threshold min
+    private int s = 3; // Speed
     private GreenfootImage[] sprites;
     private int currentSpriteIndex;
-    private boolean l = false; //left
-    private boolean r = false;
-    private boolean tweening = false;
+    private boolean l = false; // Turning left
+    private boolean r = false; // Turning right
+    private boolean tweening = false; // Tweening flag
+    private int center;
 
     public Player() {
         // Load all 53 sprites and resize them to half their original size
@@ -25,6 +27,7 @@ public class Player extends Actor {
         }
         currentSpriteIndex = def;
         setImage(sprites[currentSpriteIndex]);
+        center = getImage().getWidth() / 2; // Get the center position of the sprite
     }
 
     /**
@@ -43,19 +46,11 @@ public class Player extends Actor {
             l = false;
             tweening = false;
             move(s);
-            if (currentSpriteIndex > thresL) {
-                currentSpriteIndex -= 1;
-                if (currentSpriteIndex < 0) currentSpriteIndex = sprites.length - 1;
-            }
         } else if (Greenfoot.isKeyDown("left")) {
             l = true;
             r = false;
             tweening = false;
             move(-s);
-            if (currentSpriteIndex < thresR) {
-                currentSpriteIndex += 1;
-                if (currentSpriteIndex >= sprites.length) currentSpriteIndex = 0;
-            }
         } else {
             if (l || r) {
                 l = false;
@@ -66,21 +61,26 @@ public class Player extends Actor {
     }
 
     private void update() {
+        int distanceFromCenter = getX() - getWorld().getWidth() / 2;
+        int spriteIndexDelta = distanceFromCenter / 40; // Adjust the divisor for finer control
+        currentSpriteIndex = initDef + spriteIndexDelta;
+        if (currentSpriteIndex < 0) currentSpriteIndex = 0;
+        if (currentSpriteIndex >= sprites.length) currentSpriteIndex = sprites.length - 1;
         setImage(sprites[currentSpriteIndex]);
     }
 
     private void tween() {
         if (tweening) {
-            if (currentSpriteIndex < def) {
+            if (currentSpriteIndex < initDef) {
                 currentSpriteIndex++;
-                if (currentSpriteIndex >= def) {
-                    currentSpriteIndex = def;
+                if (currentSpriteIndex >= initDef) {
+                    currentSpriteIndex = initDef;
                     tweening = false;
                 }
-            } else if (currentSpriteIndex > def) {
+            } else if (currentSpriteIndex > initDef) {
                 currentSpriteIndex--;
-                if (currentSpriteIndex <= def) {
-                    currentSpriteIndex = def-1;
+                if (currentSpriteIndex <= initDef) {
+                    currentSpriteIndex = initDef;
                     tweening = false;
                 }
             }
