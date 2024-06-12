@@ -10,7 +10,6 @@ public class Player extends Actor {
     private static final int initDef = 14; // Initial default frame
     private static final int thresL = 7; // Left turn threshold min
     private static final int thresR = 21; // Right turn threshold min
-    private int s = 3; // Speed
     private GreenfootImage[] sprites;
     private int currentSpriteIndex;
     private boolean l = false; // Turning left
@@ -37,7 +36,6 @@ public class Player extends Actor {
     public void act() {
         handleInput();
         update();
-        tween();
     }
 
     private void handleInput() {
@@ -45,12 +43,12 @@ public class Player extends Actor {
             r = true;
             l = false;
             tweening = false;
-            move(s);
+            move(MyWorld.speed);
         } else if (Greenfoot.isKeyDown("left")) {
             l = true;
             r = false;
             tweening = false;
-            move(-s);
+            move(-MyWorld.speed);
         } else {
             if (l || r) {
                 l = false;
@@ -62,29 +60,10 @@ public class Player extends Actor {
 
     private void update() {
         int distanceFromCenter = getX() - getWorld().getWidth() / 2;
-        int spriteIndexDelta = distanceFromCenter / 40; // Adjust the divisor for finer control
+        int spriteIndexDelta = distanceFromCenter / 60; // Adjust the divisor for finer control
         currentSpriteIndex = initDef + spriteIndexDelta;
         if (currentSpriteIndex < 0) currentSpriteIndex = 0;
         if (currentSpriteIndex >= sprites.length) currentSpriteIndex = sprites.length - 1;
         setImage(sprites[currentSpriteIndex]);
-    }
-
-    private void tween() {
-        if (tweening) {
-            if (currentSpriteIndex < initDef) {
-                currentSpriteIndex++;
-                if (currentSpriteIndex >= initDef) {
-                    currentSpriteIndex = initDef;
-                    tweening = false;
-                }
-            } else if (currentSpriteIndex > initDef) {
-                currentSpriteIndex--;
-                if (currentSpriteIndex <= initDef) {
-                    currentSpriteIndex = initDef;
-                    tweening = false;
-                }
-            }
-            setImage(sprites[currentSpriteIndex]);
-        }
     }
 }

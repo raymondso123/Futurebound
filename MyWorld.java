@@ -13,8 +13,9 @@ public class MyWorld extends World
      * Constructor for objects of class MyWorld.
      * 
      */
-    public static boolean turning = true;
+    public static boolean turning = false;
     public static double dist = 0;
+    public static int speed = 5;
     SimpleTimer timer = new SimpleTimer();
     
     public MyWorld()
@@ -22,17 +23,18 @@ public class MyWorld extends World
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1);
         int grassOffset = 100;
+        int length = 40;
         
         //left
-        for (int i = 0; i < 29; i++) {
+        for (int i = 0; i < length; i++) {
             Grass g = new Grass();
-            addObject(g, 0+grassOffset, getHeight() - i*5);
+            addObject(g, grassOffset+i*5, getHeight() - i*3);
         }
         
         //right
-        for (int i = 0; i < 29; i++) {
+        for (int i = 0; i < length; i++) {
             Grass g = new Grass();
-            addObject(g, getWidth()-grassOffset, getHeight()-i*5);
+            addObject(g, getWidth()-grassOffset-i*5, getHeight()-i*3);
         }
         
         Player plr = new Player();

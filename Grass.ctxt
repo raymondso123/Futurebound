@@ -1,10 +1,14 @@
 #BlueJ class context
 comment0.target=Grass
-comment0.text=\n\ Write\ a\ description\ of\ class\ Grass\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment0.text=\n\ Grass\ class\ -\ represents\ grass\ objects\ that\ stretch\ horizontally\ based\ on\ their\ position.\n\ \n
 comment1.params=
-comment1.target=void\ act()
-comment1.text=\n\ Act\ -\ do\ whatever\ the\ Grass\ wants\ to\ do.\ This\ method\ is\ called\ whenever\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\n
+comment1.target=Grass()
 comment2.params=
-comment2.target=void\ stretchToViewport()
-comment2.text=\n\ Stretch\ the\ grass\ actor\ horizontally\ to\ fill\ the\ viewport\ based\ on\ its\ position.\n
-numComments=3
+comment2.target=void\ act()
+comment3.params=
+comment3.target=void\ road()
+comment4.params=
+comment4.target=void\ colour()
+comment5.params=
+comment5.target=void\ fill()
+numComments=6
