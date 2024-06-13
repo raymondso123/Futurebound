@@ -6,17 +6,16 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Grass extends Actor
 {
-    private GreenfootImage image;
+    private GreenfootImage image; 
+        
     public Grass() {
         image = new GreenfootImage("grass2.jpg");
-        setImage(image);
-    }
+        setImage(image);    }
     
     public void act()
     {
         road();
         fill();
-        colour();
     }
 
     private void road() {
@@ -25,11 +24,8 @@ public class Grass extends Actor
         int x = getX();
         
         if (MyWorld.turning == true) {
+            
         }
-    }
-    
-    private void colour() {
-        
     }
     
     private void fill() {

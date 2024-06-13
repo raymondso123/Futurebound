@@ -14,8 +14,10 @@ public class MyWorld extends World
      * 
      */
     public static boolean turning = false;
-    public static double dist = 0;
+    public static double angle = 0;
     public static int speed = 5;
+    public static boolean plrExists = false;
+    public static int overlays = 0;
     SimpleTimer timer = new SimpleTimer();
     
     public MyWorld()
@@ -24,6 +26,8 @@ public class MyWorld extends World
         super(600, 400, 1);
         int grassOffset = 100;
         int length = 40;
+        
+        timer.mark();
         
         //left
         for (int i = 0; i < length; i++) {
@@ -37,15 +41,18 @@ public class MyWorld extends World
             addObject(g, getWidth()-grassOffset-i*5, getHeight()-i*3);
         }
         
+        RoadOverlay r = new RoadOverlay();
+        addObject(r,getWidth()/2,275);
+    
         Player plr = new Player();
         addObject(plr, getWidth()-(int)(getWidth()*0.375), getHeight()-(int)(getHeight()*0.1));
-        //addObject(plr, getWidth() / 2, getHeight() / 2);
-        timer.mark();
     }
     
     public void act() {
         if (timer.millisElapsed() > 1000) {
-            dist = 1;
+            timer.mark();
+            angle = 1;
+            turning = true;
         }
     }
 }
