@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Opponent
-comment0.text=\n\ Player\ class\ -\ represents\ the\ player's\ car.\n\ Handles\ user\ input,\ speed,\ collision\ detection,\ and\ costume\ changes.\n\ \n
+comment0.text=\n\ Opponent\ class\ -\ represents\ the\ opponent's\ car.\n\ Handles\ AI\ movement\ and\ scaling\ based\ on\ y-position.\n
 comment1.params=
 comment1.target=Opponent()
 comment2.params=
@@ -11,4 +11,6 @@ comment4.params=
 comment4.target=void\ handleInput()
 comment5.params=
 comment5.target=void\ update()
-numComments=6
+comment6.params=
+comment6.target=void\ spinout()
+numComments=7
