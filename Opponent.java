@@ -34,7 +34,6 @@ public class Opponent extends Actor {
         ai();
         update();
         handleInput();
-        adjustSize();
     }
 
     private void ai() {
@@ -65,6 +64,10 @@ public class Opponent extends Actor {
         if (tweening) {
             spinout();
         }
+        
+        if (getY() > 380) {
+            getWorld().removeObject(this);
+        }
     }
 
     private void handleInput() {
@@ -90,7 +93,7 @@ public class Opponent extends Actor {
 
     private void adjustSize() {
         GreenfootImage img = new GreenfootImage(sprites[currentSpriteIndex]);
-        img.scale(img.getWidth()*(getWorld().getHeight()-getY()/200), img.getHeight()*(getWorld().getHeight()-getY()/200));
+        img.scale((int)(img.getWidth()*1.5), (int)(img.getHeight()*1.5));
         setImage(img);
     }
     
@@ -102,10 +105,11 @@ public class Opponent extends Actor {
         }
         setImage(sprites[currentSpriteIndex]);
         
-        if (getX()<getWorld().getWidth()) {
-            setLocation(getX()-5,getY()+1);
+        if (getX()<getWorld().getWidth()/2) {
+            setLocation(getX()-15,getY()+3);
         } else {
-            setLocation(getX()+5,getY()+1);
+            setLocation(getX()+15,getY()+3);
+            adjustSize();
         }
     }
 }
