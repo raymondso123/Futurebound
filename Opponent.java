@@ -34,6 +34,7 @@ public class Opponent extends Actor {
         ai();
         update();
         handleInput();
+        adjustSize();
     }
 
     private void ai() {
@@ -58,8 +59,11 @@ public class Opponent extends Actor {
         }
         
         if (this.isTouching(Grass.class)) {
-            spinout();
             tweening = true;
+        }
+        
+        if (tweening) {
+            spinout();
         }
     }
 
@@ -82,6 +86,12 @@ public class Opponent extends Actor {
             if (currentSpriteIndex >= sprites.length) currentSpriteIndex = sprites.length - 1;
             setImage(sprites[currentSpriteIndex]);
         }
+    }
+
+    private void adjustSize() {
+        GreenfootImage img = new GreenfootImage(sprites[currentSpriteIndex]);
+        img.scale(img.getWidth()*(getWorld().getHeight()-getY()/200), img.getHeight()*(getWorld().getHeight()-getY()/200));
+        setImage(img);
     }
     
     private void spinout() {
