@@ -36,6 +36,7 @@ public class Player extends Actor {
     public void act() {
         handleInput();
         update();
+        
     }
 
     private void handleInput() {
@@ -43,12 +44,12 @@ public class Player extends Actor {
             r = true;
             l = false;
             tweening = false;
-            move(MyWorld.speed);
+            move(MyWorld.speed/2);
         } else if (Greenfoot.isKeyDown("left")) {
             l = true;
             r = false;
             tweening = false;
-            move(-MyWorld.speed);
+            move(-MyWorld.speed/2);
         } else {
             if (l || r) {
                 l = false;
