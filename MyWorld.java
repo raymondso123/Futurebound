@@ -19,6 +19,7 @@ public class MyWorld extends World
     private int spawnInterval;
     public static int speed = 6;
     public static int grassOffset = 100;
+    public static boolean started = false;
     //public static boolean plrExists = false;
     public static int overlays = 0;
     SimpleTimer timer = new SimpleTimer();

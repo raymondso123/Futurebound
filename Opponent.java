@@ -31,9 +31,11 @@ public class Opponent extends Actor {
     }
 
     public void act() {
-        ai();
-        update();
-        handleInput();
+        if (MyWorld.started) {
+            ai();
+            update();
+            handleInput();
+        }
     }
 
     private void ai() {
