@@ -58,6 +58,19 @@ public class MyWorld extends World
         carTrigger t = new carTrigger();
         addObject(t, getWidth()-(int)(getWidth()*0.375), 380);
         timer.mark();
+        
+        Instructions i = new Instructions();
+        addObject(i,getWidth()/2,100);
+        
+        
+    }
+    
+    public void act() {
+        if (started) {
+            if (timer.millisElapsed()>5000) {
+                removeObjects(getObjects(Instructions.class));
+            }
+        }
     }
 }
 
