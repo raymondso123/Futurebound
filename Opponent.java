@@ -16,46 +16,50 @@ public class Opponent extends Actor {
     private boolean r = false; // Turning right
     private boolean tweening = false; // Tweening flag
     private int center;
+    SimpleTimer delay = new SimpleTimer();
 
     public Opponent() {
         // Load all 53 sprites and resize them to half their original size
         sprites = new GreenfootImage[53];
         for (int i = 0; i < sprites.length; i++) {
-            sprites[i] = new GreenfootImage("Vehicles-Sprites/PLAYER/" + i + ".png");
-            sprites[i].scale(sprites[i].getWidth() / 2, sprites[i].getHeight() / 2);
+            sprites[i] = new GreenfootImage("Vehicles-Sprites/OBSTACLE1/" + i + ".png");
+            sprites[i].scale(sprites[i].getWidth() / 4, sprites[i].getHeight() / 4);
         }
         currentSpriteIndex = def;
         setImage(sprites[currentSpriteIndex]);
-        center = getImage().getWidth() / 2; // Get the center position of the sprite
+        center = getImage().getWidth() / 2;
+        delay.mark();
     }
 
-    /**
-     * Act - do whatever the Player wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
     public void act() {
-        handleInput();
+        ai();
         update();
-        
+        handleInput();
     }
 
+    private void ai() {
+        int neg = Greenfoot.getRandomNumber(2);
+        int rand = Greenfoot.getRandomNumber(10);
+        if (delay.millisElapsed()>100) {
+            delay.mark();
+            if (neg==0) {
+                for (int i=0;i<rand;i++) {
+                    move(-1);
+                }
+            } else {
+                for (int i=0;i<rand;i++) {
+                    move(1);
+                };
+            }
+        }
+        setLocation(getX(),getY()-(10-MyWorld.speed));
+    }
+    
     private void handleInput() {
         if (Greenfoot.isKeyDown("right")) {
-            r = true;
-            l = false;
-            tweening = false;
-            move(MyWorld.speed/2);
+            move(MyWorld.speed/4);
         } else if (Greenfoot.isKeyDown("left")) {
-            l = true;
-            r = false;
-            tweening = false;
-            move(-MyWorld.speed/2);
-        } else {
-            if (l || r) {
-                l = false;
-                r = false;
-                tweening = true;
-            }
+            move(-MyWorld.speed/4);
         }
     }
 

@@ -5,8 +5,18 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Cone extends Actor
 {
+    private GreenfootImage image;
+        
+    public Cone() {
+        image = new GreenfootImage("cone.png");
+        setImage(image);
+    }
+    
     public void act()
     {
+        int factor = (getY()/5);
+        image.scale(factor,factor);
         
+        setLocation(getX(),getY()+MyWorld.speed/2);
     }
 }

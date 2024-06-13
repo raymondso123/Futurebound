@@ -17,7 +17,7 @@ public class MyWorld extends World
     public static int distance =0;
     private int spawnTimer = 0;
     private int spawnInterval;
-    public static int speed = 10;
+    public static int speed = 6;
     public static int grassOffset = 100;
     //public static boolean plrExists = false;
     public static int overlays = 0;
@@ -48,20 +48,15 @@ public class MyWorld extends World
         RoadOverlay r = new RoadOverlay();
         addObject(r,getWidth()/2,275);
         
+        Opponent opp = new Opponent();
+        addObject(opp, getWidth()-(int)(getWidth()/2), 300);
+        
         Player plr = new Player();
         addObject(plr, getWidth()-(int)(getWidth()*0.375), getHeight()-(int)(getHeight()*0.1));
-        
-        //Opponent opp = new Opponent();
-        //addObject(opp, getWidth()-(int)(getWidth()*0.75), getHeight()-(int)(getHeight()*0.1));
         
         carTrigger t = new carTrigger();
         addObject(t, getWidth()-(int)(getWidth()*0.375), 380);
         timer.mark();
-    }
-    
-    public int ran(int start, int end) {
-        int normal = Greenfoot.getRandomNumber(end - start + 1);
-        return normal + start;
     }
 }
 
