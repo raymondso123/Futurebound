@@ -5,6 +5,4 @@ comment1.params=
 comment1.target=MyWorld()
 comment2.params=start\ end
 comment2.target=int\ ran(int,\ int)
-comment3.params=
-comment3.target=void\ act()
-numComments=4
+numComments=3

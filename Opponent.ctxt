@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Opponent
+comment0.text=\n\ Player\ class\ -\ represents\ the\ player's\ car.\n\ Handles\ user\ input,\ speed,\ collision\ detection,\ and\ costume\ changes.\n\ \n
+comment1.params=
+comment1.target=Opponent()
+comment2.params=
+comment2.target=void\ act()
+comment2.text=\n\ Act\ -\ do\ whatever\ the\ Player\ wants\ to\ do.\ This\ method\ is\ called\ whenever\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\n
+comment3.params=
+comment3.target=void\ handleInput()
+comment4.params=
+comment4.target=void\ update()
+numComments=5

@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=Cone
+comment0.text=\n\ Cone\ class\ -\ represents\ a\ cone\ actor\ that\ spawns\ randomly\ and\ scales\ based\ on\ difficulty\ and\ position.\n
+comment1.params=
+comment1.target=void\ act()
+numComments=2

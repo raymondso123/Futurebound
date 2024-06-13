@@ -13,7 +13,10 @@ public class MyWorld extends World
      * Constructor for objects of class MyWorld.
      * 
      */
-    public static double distance = 0;
+    public static int difficulty = 1;
+    public static int distance =0;
+    private int spawnTimer = 0;
+    private int spawnInterval;
     public static int speed = 10;
     public static int grassOffset = 100;
     //public static boolean plrExists = false;
@@ -47,27 +50,18 @@ public class MyWorld extends World
         
         Player plr = new Player();
         addObject(plr, getWidth()-(int)(getWidth()*0.375), getHeight()-(int)(getHeight()*0.1));
-        timer.mark();
+        
+        //Opponent opp = new Opponent();
+        //addObject(opp, getWidth()-(int)(getWidth()*0.75), getHeight()-(int)(getHeight()*0.1));
         
         carTrigger t = new carTrigger();
         addObject(t, getWidth()-(int)(getWidth()*0.375), 380);
+        timer.mark();
     }
     
     public int ran(int start, int end) {
         int normal = Greenfoot.getRandomNumber(end - start + 1);
         return normal + start;
-    }
-    
-    public void act() {
-        
-            /*
-        if (timer.millisElapsed() > 3000) {
-            distance = 1;
-            if (timer.millisElapsed() > 5000) {
-                distance = 0;
-                timer.mark();
-        }
-            }*/
     }
 }
 
