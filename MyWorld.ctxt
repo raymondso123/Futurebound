@@ -1,8 +1,16 @@
 #BlueJ class context
 comment0.target=MyWorld
-comment0.text=\n\ Write\ a\ description\ of\ class\ MyWorld\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment0.text=\n\ MyWorld\ class\ -\ represents\ the\ game\ world.\n\ Initializes\ the\ world\ and\ manages\ game\ state.\n
 comment1.params=
 comment1.target=MyWorld()
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ MyWorld.\n
 comment2.params=
-comment2.target=void\ act()
-numComments=3
+comment2.target=void\ setupWorld()
+comment2.text=\n\ Sets\ up\ the\ initial\ state\ of\ the\ world.\n
+comment3.params=
+comment3.target=void\ act()
+comment3.text=\n\ Act\ method\ called\ by\ Greenfoot.\ Manages\ game\ state\ during\ gameplay.\n
+comment4.params=
+comment4.target=void\ removeInstructions()
+comment4.text=\n\ Removes\ instruction\ objects\ from\ the\ world.\n
+numComments=5

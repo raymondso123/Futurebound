@@ -1,13 +1,16 @@
 #BlueJ class context
 comment0.target=Player
-comment0.text=\n\ Player\ class\ -\ represents\ the\ player's\ car.\n\ Handles\ user\ input,\ speed,\ collision\ detection,\ and\ costume\ changes.\n\ \n
+comment0.text=\n\ Player\ class\ -\ represents\ the\ player's\ car.\n\ Handles\ user\ input,\ speed,\ collision\ detection,\ and\ costume\ changes.\n
 comment1.params=
 comment1.target=Player()
+comment1.text=\n\ Constructor\ initializes\ the\ player.\n
 comment2.params=
 comment2.target=void\ act()
-comment2.text=\n\ Act\ -\ do\ whatever\ the\ Player\ wants\ to\ do.\ This\ method\ is\ called\ whenever\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\n
+comment2.text=\n\ Act\ method\ called\ by\ Greenfoot.\ Handles\ player's\ behavior.\n
 comment3.params=
 comment3.target=void\ handleInput()
+comment3.text=\n\ Handle\ user\ input\ to\ move\ the\ player\ and\ set\ turning\ flags.\n
 comment4.params=
 comment4.target=void\ update()
+comment4.text=\n\ Update\ the\ player's\ sprite\ based\ on\ its\ X\ position.\n
 numComments=5

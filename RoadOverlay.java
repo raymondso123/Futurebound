@@ -1,71 +1,55 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
 /**
- * Write a description of class RoadOverlay here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * RoadOverlay class - represents a road overlay that dynamically scales and moves vertically.
  */
-public class RoadOverlay extends Actor
-{
+public class RoadOverlay extends Actor {
+
     private GreenfootImage image;
     private boolean hitEdge = false;
-    SimpleTimer timer = new SimpleTimer();
-   
+    private SimpleTimer timer = new SimpleTimer();
+
+    /**
+     * Constructor initializes the road overlay with its image and initial scaling.
+     */
     public RoadOverlay() {
         image = new GreenfootImage("overlay.png");
-        image.scale(600,2);
+        image.scale(600, 2); // Initial scaling of the overlay
         setImage(image);
-        timer.mark();
+        timer.mark(); // Start the timer
     }
-    
-    public void act()
-    {
-        /*
-        if (timer.millisElapsed() == (5-MyWorld.speed)/2) {
-            if (MyWorld.overlays<2) {
-                RoadOverlay r = new RoadOverlay();
-                getWorld().addObject(r,getWorld().getWidth()/2,275);
-                MyWorld.overlays++;
-            }
-        }*/
-        
+
+    /**
+     * Act method called by Greenfoot. Handles the behavior of the road overlay.
+     */
+    public void act() {
+        // Check if the image height is greater than 1 (to prevent unnecessary processing)
         if (image.getHeight() > 1) {
-            if (timer.millisElapsed() > 5-MyWorld.speed) {
-                timer.mark();
+            // Control the scaling and movement based on elapsed time and game speed
+            if (timer.millisElapsed() > 5 - MyWorld.speed) {
+                timer.mark(); // Reset the timer
+
                 if (!hitEdge) {
-                    setLocation(getX(),getY()+MyWorld.speed*2);
+                    // Move the overlay downwards and scale up if not at the edge
+                    setLocation(getX(), getY() + MyWorld.speed * 2);
                     if (image.getHeight() < 150) {
-                        image.scale(image.getWidth(),image.getHeight()+(int)(MyWorld.speed*1.5));
+                        image.scale(image.getWidth(), image.getHeight() + (int) (MyWorld.speed * 1.5));
                     }
-                    
-                    /*
-                    if (getY()>310 && getY()<340) {
-                        if (MyWorld.overlays<1) {
-                            RoadOverlay r = new RoadOverlay();
-                            getWorld().addObject(r,getWorld().getWidth()/2,275);
-                            MyWorld.overlays++;
-                            
-                            if (!MyWorld.plrExists) {
-                                MyWorld.plrExists = true;
-                                Player plr = new Player();
-                                getWorld().addObject(plr, getWorld().getWidth()-(int)(getWorld().getWidth()*0.375), getWorld().getHeight()-(int)(getWorld().getHeight()*0.1));                            
-                            }
-                        }
-                    }*/
-                    
+
+                    // Check if the overlay has reached the edge of the world
                     if (isAtEdge()) {
                         hitEdge = true;
                     }
                 } else {
-                    if (image.getHeight() > MyWorld.speed*2) {
-                        image.scale(image.getWidth(),image.getHeight()-MyWorld.speed*1);
+                    // Shrink the overlay and reset position if it has reached the edge
+                    if (image.getHeight() > MyWorld.speed * 2) {
+                        image.scale(image.getWidth(), image.getHeight() - MyWorld.speed * 1);
                     } else {
                         hitEdge = false;
-                        setLocation(getWorld().getWidth()/2,275);
-                        image.scale(getWorld().getWidth(),2);
-                        
-                        timer.mark();
+                        setLocation(getWorld().getWidth() / 2, 275); // Reset position
+                        image.scale(getWorld().getWidth(), 2); // Reset scaling
+
+                        timer.mark(); // Restart the timer
                     }
                 }
             }
