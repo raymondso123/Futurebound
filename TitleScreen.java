@@ -9,6 +9,8 @@ public class TitleScreen extends World {
     public void act() {
         if (Greenfoot.isKeyDown("space")) {
             Greenfoot.setWorld(new Story1());
+            //Greenfoot.setWorld(new MyWorld());
+            //MyWorld.started = true;
         }
     }
 }

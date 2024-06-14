@@ -31,7 +31,7 @@ public class Opponent extends Actor {
     }
 
     public void act() {
-        if (MyWorld.started) {
+        if (MyWorld.started && MyWorld.lvl == 0) {
             ai();
             update();
             handleInput();
@@ -40,36 +40,39 @@ public class Opponent extends Actor {
 
     private void ai() {
         int neg = Greenfoot.getRandomNumber(2);
-        int rand = Greenfoot.getRandomNumber(10);
+        int rand = Greenfoot.getRandomNumber(6);
+        
         if (delay.millisElapsed() > 100) {
-            delay.mark();
-            if (neg == 0) {
-                for (int i = 0; i < rand; i++) {
-                    move(-1);
-                }
-            } else {
-                for (int i = 0; i < rand; i++) {
-                    move(1);
+                delay.mark();
+                if (neg == 0) {
+                    for (int i = 0; i < rand; i++) {
+                        move(-1);
+                    }
+                } else {
+                    for (int i = 0; i < rand; i++) {
+                        move(1);
+                    }
                 }
             }
-        }
-        setLocation(getX(), getY() - (10 - MyWorld.speed));
-        
-        if (getY()<260) {
-            Greenfoot.delay(10000);
-        }
-        
-        if (this.isTouching(Grass.class)) {
-            tweening = true;
-        }
-        
-        if (tweening) {
-            spinout();
-        }
-        
-        if (getY() > 380) {
-            getWorld().removeObject(this);
-        }
+            setLocation(getX(), getY() - (10 - MyWorld.speed));
+            
+            if (getY()<260) {
+                Greenfoot.setWorld(new Death1());
+                Greenfoot.delay(10000);
+            }
+            
+            if (this.isTouching(Grass.class)) {
+                tweening = true;
+            }
+            
+            if (tweening) {
+                spinout();
+            }
+            
+            if (getY() > 380) {
+                MyWorld.lvl = 1;
+                getWorld().removeObject(this);
+            }
     }
 
     private void handleInput() {

@@ -14,7 +14,7 @@ public class Cone extends Actor
     
     public void act()
     {
-        int factor = (getY()/5);
+        int factor = (getY()+5/5);
         image.scale(factor,factor);
         
         setLocation(getX(),getY()+MyWorld.speed/2);
