@@ -13,8 +13,8 @@ public class RoadOverlay extends Actor {
      * Constructor initializes the road overlay with its image and initial scaling.
      */
     public RoadOverlay() {
-        image = new GreenfootImage("overlay.png");
-        image.scale(600, 2); // Initial scaling of the overlay
+        image = new GreenfootImage("Line.png");
+        image.scale(5, 5); // Initial scaling of the overlay
         setImage(image);
         timer.mark(); // Start the timer
     }
@@ -32,7 +32,7 @@ public class RoadOverlay extends Actor {
                 if (!hitEdge) {
                     // Move the overlay downwards and scale up if not at the edge
                     setLocation(getX(), getY() + MyWorld.speed * 2);
-                    if (image.getHeight() < 150) {
+                    if (image.getHeight() < 2) {
                         image.scale(image.getWidth(), image.getHeight() + (int) (MyWorld.speed * 1.5));
                     }
 
@@ -46,7 +46,7 @@ public class RoadOverlay extends Actor {
                         image.scale(image.getWidth(), image.getHeight() - MyWorld.speed * 1);
                     } else {
                         hitEdge = false;
-                        setLocation(getWorld().getWidth() / 2, 275); // Reset position
+                        setLocation(getWorld().getWidth() / 2, 200); // Reset position
                         image.scale(getWorld().getWidth(), 2); // Reset scaling
 
                         timer.mark(); // Restart the timer

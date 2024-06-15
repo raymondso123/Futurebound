@@ -54,6 +54,9 @@ public class MyWorld extends World {
             addObject(new Grass(), getWidth() - grassOffset - i * 5, getHeight() - i * 5);
         }
         */
+        
+        // Add road overlay
+        addObject(new RoadOverlay(), getWidth() / 2, 275);
        
         for (int i = 0; i < length; i++) {
             addObject(new Road(), getWidth()/2, getHeight() - i * 5);
@@ -61,9 +64,6 @@ public class MyWorld extends World {
         
         // Add sky object in the center
         addObject(new Sky(), getWidth() / 2 - 15, getHeight() / 2);
-        
-        // Add road overlay
-        addObject(new RoadOverlay(), getWidth() / 2, 275);
         
         // Add opponent car
         addObject(new Opponent(), getWidth() - (int) (getWidth() / 2), 300);

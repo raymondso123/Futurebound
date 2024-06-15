@@ -31,9 +31,9 @@ public class carTrigger extends Actor
     
     private void handleInput() {
         if (Greenfoot.isKeyDown("right")) {
-            move((int)(MyWorld.speed)/2);
+            move((int)(MyWorld.speed)/3);
         } else if (Greenfoot.isKeyDown("left")) {
-            move((int)(-MyWorld.speed)/2);
+            move((int)(-MyWorld.speed)/3);
         }
     }
 }

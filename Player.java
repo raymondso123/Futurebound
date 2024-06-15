@@ -58,7 +58,7 @@ public class Player extends Actor {
             r = true;      // Set turning right flag
             l = false;     // Clear turning left flag
             tweening = false; // Clear tweening flag
-            move(MyWorld.speed/2); // Move right
+            move(MyWorld.speed/3); // Move right
         } else if (Greenfoot.isKeyDown("left")) {
             if (!l) {
                 currentSpriteIndex = initDef; // Reset to default frame when starting a new left turn
@@ -66,7 +66,7 @@ public class Player extends Actor {
             l = true;      // Set turning left flag
             r = false;     // Clear turning right flag
             tweening = false; // Clear tweening flag
-            move(-MyWorld.speed/2); // Move left
+            move(-MyWorld.speed/3); // Move left
         } else {
             if (l || r) {
                 l = false;    // Clear turning left flag
