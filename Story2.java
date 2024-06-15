@@ -17,9 +17,10 @@ public class Story2 extends World
     }
     
     public void act() {
-        if (timer.millisElapsed()>5000) {
-            Greenfoot.setWorld(new MyWorld());
-            MyWorld.started = true;
+        if (!MyWorld.started) {
+            if (timer.millisElapsed()>5000) {
+                Greenfoot.setWorld(new TitleScreen());
+            }
         }
     }
 }

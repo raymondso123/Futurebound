@@ -4,6 +4,4 @@ comment0.text=\n\ Write\ a\ description\ of\ class\ Sky\ here.\n\ \n\ @author\ (
 comment1.params=
 comment1.target=void\ act()
 comment1.text=\n\ Act\ -\ do\ whatever\ the\ Sky\ wants\ to\ do.\ This\ method\ is\ called\ whenever\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\n
-comment2.params=
-comment2.target=void\ handleInput()
-numComments=3
+numComments=2

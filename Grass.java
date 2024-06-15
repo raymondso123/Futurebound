@@ -3,6 +3,7 @@ import greenfoot.*;
 /**
  * Grass class - represents grass objects that stretch horizontally based on their position.
  */
+
 public class Grass extends Actor {
     private GreenfootImage image;
     private int offset = 0;
@@ -13,14 +14,16 @@ public class Grass extends Actor {
     }
 
     public void act() {
-        turn();
-        fill();
-        handleInput();
+        //turn();
+        //fill();
+        //handleInput();
     }
 
     /**
      * Adjusts the position of the grass actor based on the current distance in the game.
      */
+    
+    /* Deprecated
     private void turn() {
         int last = getWorld().getWidth();
         int mid = getWorld().getWidth() / 2;
@@ -47,7 +50,7 @@ public class Grass extends Actor {
         }
 
         setLocation(newX, y);
-    }
+    } */
 
     /**
      * Handles user input for adjusting the offset of the grass.

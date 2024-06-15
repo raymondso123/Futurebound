@@ -7,10 +7,10 @@ import greenfoot.*;
 public class Player extends Actor {
     
     // Constants for sprite indices and turn thresholds
-    private static final int def = 14;       // Default frame when not turning
-    private static final int initDef = 14;   // Initial default frame
-    private static final int thresL = 7;      // Left turn threshold min
-    private static final int thresR = 21;     // Right turn threshold min
+    private static int def = 13;       // Default frame when not turning
+    private static final int initDef = 13;   // Initial default frame
+    private static final int thresL = 12;    // Left turn threshold min
+    private static final int thresR = 15;    // Right turn threshold min
     
     // Array to store sprite images
     private GreenfootImage[] sprites;
@@ -41,8 +41,10 @@ public class Player extends Actor {
      * Act method called by Greenfoot. Handles player's behavior.
      */
     public void act() {
-        handleInput(); // Handle user input
-        update();      // Update player's appearance based on position
+        if (MyWorld.started) {
+            handleInput(); // Handle user input
+            update();      // Update player's appearance based on position
+        }
     }
 
     /**
@@ -50,15 +52,21 @@ public class Player extends Actor {
      */
     private void handleInput() {
         if (Greenfoot.isKeyDown("right")) {
+            if (!r) {
+                currentSpriteIndex = initDef; // Reset to default frame when starting a new right turn
+            }
             r = true;      // Set turning right flag
             l = false;     // Clear turning left flag
             tweening = false; // Clear tweening flag
-            move(MyWorld.speed / 2); // Move right
+            move(MyWorld.speed/2); // Move right
         } else if (Greenfoot.isKeyDown("left")) {
+            if (!l) {
+                currentSpriteIndex = initDef; // Reset to default frame when starting a new left turn
+            }
             l = true;      // Set turning left flag
             r = false;     // Clear turning right flag
             tweening = false; // Clear tweening flag
-            move(-MyWorld.speed / 2); // Move left
+            move(-MyWorld.speed/2); // Move left
         } else {
             if (l || r) {
                 l = false;    // Clear turning left flag
@@ -73,17 +81,38 @@ public class Player extends Actor {
      */
     private void update() {
         int distanceFromCenter = getX() - getWorld().getWidth() / 2;
-        int spriteIndexDelta = distanceFromCenter / 60; // Adjust the divisor for finer control
+        int spriteIndexDelta;
+    
+        // Calculate spriteIndexDelta based on the side of the center
+        if (distanceFromCenter < 0) {
+            // On the left side, increase index as it moves further left
+            spriteIndexDelta = Math.abs(distanceFromCenter) / 60; // Adjust the divisor for finer control
+        } else {
+            // On the right side, decrease index as it moves further right
+            spriteIndexDelta = -Math.abs(distanceFromCenter) / 60; // Adjust the divisor for finer control
+        }
+    
         currentSpriteIndex = initDef + spriteIndexDelta;
-        
-        // Clamp sprite index within valid range
-        if (currentSpriteIndex < 0) {
-            currentSpriteIndex = 0;
+    
+        // Clamp sprite index within the range of thresL to thresR
+        if (currentSpriteIndex < thresL) {
+            currentSpriteIndex = thresL;
         }
-        if (currentSpriteIndex >= sprites.length) {
-            currentSpriteIndex = sprites.length - 1;
+        if (currentSpriteIndex > thresR) {
+            currentSpriteIndex = thresR;
         }
         
+        // Perform tweening to transition back to initDef when tweening flag is true
+        if (tweening) {
+            if (currentSpriteIndex < initDef) {
+                currentSpriteIndex++;
+            } else if (currentSpriteIndex > initDef) {
+                currentSpriteIndex--;
+            } else {
+                tweening = false; // Tweening complete
+            }
+        }
+    
         // Set the image to the current sprite
         setImage(sprites[currentSpriteIndex]);
     }

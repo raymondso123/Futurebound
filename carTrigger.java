@@ -14,17 +14,19 @@ public class carTrigger extends Actor
      */
     public void act()
     {
-         handleInput();
-         
-         if (this.isTouching(Grass.class)) {
-             if (MyWorld.speed>2) {
-                 MyWorld.speed--;
-             }
-         } else {
-             if (MyWorld.speed<10) {
-                 MyWorld.speed++;
-             }
-         }
+        if (MyWorld.started) { 
+            handleInput();
+             
+            if (!this.isTouching(Road.class)) {
+                 if (MyWorld.speed>2) {
+                     MyWorld.speed--;
+                 }
+            } else {
+                 if (MyWorld.speed<10) {
+                     MyWorld.speed++;
+                 }
+            }
+        }
     }
     
     private void handleInput() {

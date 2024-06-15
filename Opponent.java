@@ -45,7 +45,7 @@ public class Opponent extends Actor {
      */
     public void act() {
         // Only act if the game has started and it's level 0
-        if (MyWorld.started && MyWorld.lvl == 0) {
+        if (MyWorld.started) {
             ai(); // Perform AI movement
             update(); // Update opponent's appearance
             handleInput(); // Handle user input
@@ -57,10 +57,10 @@ public class Opponent extends Actor {
      */
     private void ai() {
         int neg = Greenfoot.getRandomNumber(2);
-        int rand = Greenfoot.getRandomNumber(6);
+        int rand = Greenfoot.getRandomNumber(10);
         
-        // Perform movement every 100 milliseconds
-        if (delay.millisElapsed() > 100) {
+        // Perform movement every 75 milliseconds
+        if (delay.millisElapsed() > 75) {
             delay.mark();
             if (neg == 0) {
                 for (int i = 0; i < rand; i++) {
@@ -83,7 +83,7 @@ public class Opponent extends Actor {
         }
         
         // Check if opponent is touching grass
-        if (this.isTouching(Grass.class)) {
+        if (!this.isTouching(Road.class)) {
             tweening = true; // Trigger spinout animation
         }
         
@@ -106,9 +106,9 @@ public class Opponent extends Actor {
         // Allow movement only if not in spinout animation
         if (!tweening) {
             if (Greenfoot.isKeyDown("right")) {
-                move(MyWorld.speed / 4); // Move right
+                move(MyWorld.speed / 3); // Move right
             } else if (Greenfoot.isKeyDown("left")) {
-                move(-MyWorld.speed / 4); // Move left
+                move(-MyWorld.speed / 3); // Move left
             }
         }
     }

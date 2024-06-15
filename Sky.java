@@ -14,14 +14,8 @@ public class Sky extends Actor
      */
     public void act()
     {
-         handleInput();
-    }
-    
-    private void handleInput() {
-        if (Greenfoot.isKeyDown("right")) {
-            move((-MyWorld.speed)/10);
-        } else if (Greenfoot.isKeyDown("left")) {
-            move((MyWorld.speed)/10);
-        }
+        int width = getWorld().getWidth();
+        int height = getWorld().getHeight();
+        setLocation((int)(width/2-MyWorld.offset*100+MyWorld.distance*getY()),getY());
     }
 }
