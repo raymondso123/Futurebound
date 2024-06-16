@@ -6,37 +6,39 @@ import greenfoot.*;
  */
 public class Opponent extends Actor {
     
-    // Constants for sprite indices
+    // constants for sprite indexes
     private static final int def = 14;
     private static final int initDef = 14;
     
-    // Array to store sprite images
+    // array to store sprite images
     private GreenfootImage[] sprites;
-    private int currentSpriteIndex; // Index of the current sprite
-    private boolean tweening = false; // Flag for spinout animation
-    private int originalWidth;
-    private int originalHeight;
+    private int current; // index of the current sprite
+    private boolean tweening = false; // for spinout animation
+    private int ogWidth;
+    private int ogHeight;
     
-    private SimpleTimer delay = new SimpleTimer(); // Timer for AI movement
+    private SimpleTimer delay = new SimpleTimer(); // timer for AI movement
+    
+    MyWorld world = (MyWorld)getWorld();
     
     /**
      * Constructor initializes the opponent.
      */
     public Opponent() {
-        // Load all 53 sprites and resize them to quarter of their original size
+        // load all 53 sprites and resize them to 1/4 of their og size
         sprites = new GreenfootImage[53];
         for (int i = 0; i < sprites.length; i++) {
             sprites[i] = new GreenfootImage("Vehicles-Sprites/OBSTACLE1/" + i + ".png");
             sprites[i].scale(sprites[i].getWidth() / 4, sprites[i].getHeight() / 4);
         }
         
-        // Set initial sprite and image properties
-        currentSpriteIndex = def;
-        setImage(sprites[currentSpriteIndex]);
-        originalWidth = sprites[0].getWidth();
-        originalHeight = sprites[0].getHeight();
+        // set initial sprite and image properties
+        current = def;
+        setImage(sprites[current]);
+        ogWidth = sprites[0].getWidth();
+        ogHeight = sprites[0].getHeight();
         
-        // Start delay timer
+        // start delay timer
         delay.mark();
     }
 
@@ -44,11 +46,11 @@ public class Opponent extends Actor {
      * Act method called by Greenfoot. Handles opponent's behavior.
      */
     public void act() {
-        // Only act if the game has started and it's level 0
-        if (MyWorld.started) {
-            ai(); // Perform AI movement
-            update(); // Update opponent's appearance
-            handleInput(); // Handle user input
+        // only act if the game has started and it's level 0
+        if (world.started) {
+            ai(); // perform AI movement
+            update(); // update opponent's appearance
+            handleInput(); // handle user input
         }
     }
 
@@ -59,43 +61,43 @@ public class Opponent extends Actor {
         int neg = Greenfoot.getRandomNumber(2);
         int rand = Greenfoot.getRandomNumber(10);
         
-        // Perform movement every 75 milliseconds
+        // perform movement every 75 milliseconds
         if (delay.millisElapsed() > 75) {
             delay.mark();
             if (neg == 0) {
                 for (int i = 0; i < rand; i++) {
-                    move(-1); // Move left randomly
+                    move(-1); // move left randomly
                 }
             } else {
                 for (int i = 0; i < rand; i++) {
-                    move(1); // Move right randomly
+                    move(1); // move right randomly
                 }
             }
         }
         
-        // Adjust Y position based on game speed
-        setLocation(getX(), getY() - (10 - MyWorld.speed));
+        // adjust Y position based on game speed
+        setLocation(getX(), getY() - (10 - world.speed));
         
-        // Check if opponent is below a certain Y threshold
+        // check if opponent is below a certain Y threshold
         if (getY() < 260) {
-            Greenfoot.setWorld(new Death1()); // Switch to death screen
-            Greenfoot.delay(10000); // Delay before continuing
+            Greenfoot.setWorld(new Death1()); // switch to death screen
+            Greenfoot.delay(10000); // delay before continuing
         }
         
-        // Check if opponent is touching grass
+        // check if opponent is touching grass
         if (!this.isTouching(Road.class)) {
-            tweening = true; // Trigger spinout animation
+            tweening = true; // trigger spinout animation
         }
         
-        // Perform spinout animation
+        // perform spinout animation
         if (tweening) {
             spinout();
         }
         
-        // Remove opponent if it reaches the bottom
+        // remove opponent if it reaches the bottom
         if (getY() > 380) {
-            MyWorld.lvl = 1; // Increase game level
-            getWorld().removeObject(this); // Remove opponent from the world
+            change(1);
+            getWorld().removeObject(this); // remove opponent from the world
         }
     }
 
@@ -103,36 +105,42 @@ public class Opponent extends Actor {
      * Handle user input to move the opponent.
      */
     private void handleInput() {
-        // Allow movement only if not in spinout animation
+        // allow movement only if not in spinout animation
         if (!tweening) {
             if (Greenfoot.isKeyDown("right")) {
-                move(MyWorld.speed / 3); // Move right
+                move(world.speed / 3); // move right
             } else if (Greenfoot.isKeyDown("left")) {
-                move(-MyWorld.speed / 3); // Move left
+                move(-world.speed / 3); // move left
             }
         }
     }
 
+    public void change(int lvl) {
+        if (world!=null) {
+            world.changeLvl(lvl);
+        }
+    }
+    
     /**
      * Update the opponent's sprite based on its X position.
      */
     private void update() {
-        // Only update sprite if not in spinout animation
+        // only update sprite if not in spinout animation
         if (!tweening) {
             int distanceFromCenter = getX() - getWorld().getWidth() / 2;
-            int spriteIndexDelta = distanceFromCenter / 60; // Adjust the divisor for finer control
-            currentSpriteIndex = initDef + spriteIndexDelta;
+            int spriteIndexDelta = distanceFromCenter / 60; // adjust the divisor for finer control
+            current = initDef + spriteIndexDelta;
             
-            // Clamp sprite index within valid range
-            if (currentSpriteIndex < 0) {
-                currentSpriteIndex = 0;
+            // clamp sprite index within raange
+            if (current < 0) {
+                current = 0;
             }
-            if (currentSpriteIndex >= sprites.length) {
-                currentSpriteIndex = sprites.length - 1;
+            if (current >= sprites.length) {
+                current = sprites.length - 1;
             }
             
-            // Set the image to the current sprite
-            setImage(sprites[currentSpriteIndex]);
+            // set the image to the current sprite
+            setImage(sprites[current]);
         }
     }
 
@@ -140,22 +148,22 @@ public class Opponent extends Actor {
      * Perform spinout animation.
      */
     private void spinout() {
-        // Cycle through sprites for spinout animation
-        if (currentSpriteIndex < sprites.length - 1) {
-            currentSpriteIndex++;
+        // cycle through sprites for spinout animation
+        if (current < sprites.length - 1) {
+            current++;
         } else {
-            currentSpriteIndex = 0; // Loop back to the first sprite
+            current = 0; // Loop back to the first sprite
         }
         
-        // Set the image to the current sprite
-        setImage(sprites[currentSpriteIndex]);
+        // set the image to the current sprite
+        setImage(sprites[current]);
         
-        // Move the opponent sideways during spinout based on its X position
+        // move the opponent sideways during spinout based on its X position
         if (getX() < getWorld().getWidth() / 2) {
-            setLocation(getX() - 15, getY() + 3); // Move left
+            setLocation(getX() - 15, getY() + 3); // move left
         } else {
-            setLocation(getX() + 15, getY() + 3); // Move right
-            adjustSize(); // Adjust size when moving right
+            setLocation(getX() + 15, getY() + 3); //move right
+            adjustSize(); // adjust size when moving right
         }
     }
     
@@ -163,8 +171,8 @@ public class Opponent extends Actor {
      * Adjust size of the opponent's image.
      */
     private void adjustSize() {
-        GreenfootImage img = new GreenfootImage(sprites[currentSpriteIndex]);
-        img.scale((int)(img.getWidth() * 1.5), (int)(img.getHeight() * 1.5)); // Scale the image
-        setImage(img); // Set the scaled image
+        GreenfootImage img = new GreenfootImage(sprites[current]);
+        img.scale((int)(img.getWidth() * 1.5), (int)(img.getHeight() * 1.5)); // scale the image
+        setImage(img); // set the scaled image
     }
 }

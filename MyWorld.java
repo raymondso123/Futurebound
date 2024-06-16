@@ -6,7 +6,7 @@ import greenfoot.*;
  */
 public class MyWorld extends World {
 
-    // Static variables for game parameters
+    // static variables for game parameters
     public static double distance = 0;
     public static double offset = 0;
     public static int speed = 6;
@@ -15,16 +15,16 @@ public class MyWorld extends World {
     //public static int overlays = 0;
     public static int lvl = 0;
     
-    // Tweening + Geenration Logic 
-    private boolean isChangingDistance = false;
-    private int changeDirection = 0; // 0 for increasing, 1 for decreasing
+    // tweening + Geenration Logic 
+    private boolean changing = false;
+    private int dir = 0; // 0 for increasing, 1 for decreasing
     private SimpleTimer genTimer = new SimpleTimer();
-    private double tweenStartValue = 0;
-    private double tweenEndValue = 0;
-    private long tweenDuration = 5000; // Duration of the tween in milliseconds
-    private long tweenStartTime = 0;
+    private double tweenStart = 0;
+    private double tweenEnd = 0;
+    private long tweenFrames = 5000; // Frames of lerp
+    private long tweenTime = 0;
 
-    // Timer to manage game events
+    // timer to manage game events
     private SimpleTimer timer = new SimpleTimer();
     private SimpleTimer gen = new SimpleTimer();
 
@@ -32,7 +32,6 @@ public class MyWorld extends World {
      * Constructor for objects of class MyWorld.
      */
     public MyWorld() {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1);
         
         setupWorld();
@@ -59,99 +58,106 @@ public class MyWorld extends World {
         addObject(new RoadOverlay(), getWidth() / 2, 275);
        
         
-        // Add road overlay (vert)
+        // add road overlay (vert)
         //addObject(new Lines(), getWidth() / 2 - 15, getHeight() / 2);
         
         for (int i = 0; i < length; i++) {
             addObject(new Road(), getWidth()/2, getHeight() - i * 5);
         }
         
-        // Add sky object in the center
+        // add sky object in the center
         addObject(new Sky(), getWidth() / 2 - 15, getHeight() / 2);
         
-        // Add opponent car
+        // add opponent car
         addObject(new Opponent(), getWidth() - (int) (getWidth() / 2), 300);
         
-        // Add player car
+        // add player car
         addObject(new Player(), getWidth() - (int) (getWidth() * 0.375), getHeight() - (int) (getHeight() * 0.1));
         
-        // Add car trigger
+        // add car trigger
         addObject(new carTrigger(), getWidth() - (int) (getWidth() * 0.375), 380);
         
-        // Start the timer
+        // add nitro (for level 2)
+            
+        // start the timer
         timer.mark();
         
-        // Show instructions if game has started
+        // show instructions if game has started
         if (started) {
             Instructions i = new Instructions();
             addObject(i, getWidth() / 2, 100);
             gen.mark();
         }
+        
+        if (lvl >= 1) {
+            addObject(new Nitro(), 46, 32);
+        }
     }
     
-    /**
-     * Act method called by Greenfoot. Manages game state during gameplay.
-     */
+    public void changeLvl(int newLevel) {
+        lvl = newLevel;
+    }
     
-    private boolean isResettingToZero = false;
+    private boolean zero = false; // changing to zero (default position)
 
     public void act() {
         if (started) {
             handleInput();
-            if (started && !isChangingDistance && !isResettingToZero) {
+            
+            if (started && !changing && !zero) {
                 if (genTimer.millisElapsed() > 5000) {
-                    isChangingDistance = true;
-                    changeDirection = Greenfoot.getRandomNumber(2); // Randomly choose direction
+                    changing = true;
+                    dir = Greenfoot.getRandomNumber(2); // randomly choose direction
                     genTimer.mark();
                     
-                    // Set tween start and end values
-                    tweenStartValue = distance;
-                    if (changeDirection == 0) {
-                        tweenEndValue = 1.0; // Tween to 1.0 if increasing
+                    // set tween start and end values
+                    tweenStart = distance;
+                    if (dir == 0) {
+                        tweenEnd = 1.0; // tween to 1.0 if increasing
                     } else {
-                        tweenEndValue = -1.0; // Tween to -1.0 if decreasing
+                        tweenEnd = -1.0; // tween to -1.0 if decreasing
                     }
                     
-                    // Start tweening
-                    tweenStartTime = System.currentTimeMillis();
+                    // start tweening
+                    tweenTime = System.currentTimeMillis();
                 }
             }
             
-            if (isChangingDistance) {
-                // Calculate elapsed time since tween start
+            if (changing) {
+                // calculate elapsed time since tween start
                 long currentTime = System.currentTimeMillis();
-                long elapsedTime = currentTime - tweenStartTime;
+                long elapsedTime = currentTime - tweenTime;
                 
-                // Check if tweening duration has passed
-                if (elapsedTime >= tweenDuration) {
-                    // Finish tweening
-                    distance = tweenEndValue;
-                    isChangingDistance = false;
-                    isResettingToZero = true;
-                    tweenStartValue = distance;
-                    tweenEndValue = 0; // Tween back to 0 after waiting
-                    tweenStartTime = currentTime; // Reset tween start time for zeroing
+                // check if tweening duration has passed
+                if (elapsedTime >= tweenFrames) {
+                    // finish tweening
+                    distance = tweenEnd;
+                    changing = false;
+                    zero = true;
+                    tweenStart = distance;
+                    tweenEnd = 0; // tween back to 0 after waiting
+                    tweenTime = currentTime; // reset tween start time for zeroing
                 } else {
-                    // Calculate current tween value (linear interpolation)
-                    double t = (double) elapsedTime / tweenDuration;
-                    distance = lerp(tweenStartValue, tweenEndValue, t);
+                    // calculate currrent tween value (linear interpolation formula)
+                    double t = (double) elapsedTime / tweenFrames;
+                    distance = lerp(tweenStart, tweenEnd, t);
                 }
             }
             
-            if (isResettingToZero) {
-                // Calculate elapsed time since tween start
+            if (zero) {
+                // calculate elapsed time since tween start
                 long currentTime = System.currentTimeMillis();
-                long elapsedTime = currentTime - tweenStartTime;
+                long elapsedTime = currentTime - tweenTime;
                 
-                // Check if tweening duration has passed
-                if (elapsedTime >= tweenDuration) {
-                    // Finish resetting to zero
+                // check if tweening duration has passed
+                if (elapsedTime >= tweenFrames) {
+                    // finish resetting to zero
                     distance = 0;
-                    isResettingToZero = false;
+                    zero = false;
                 } else {
-                    // Calculate current tween value (linear interpolation)
-                    double t = (double) elapsedTime / tweenDuration;
-                    distance = lerp(tweenStartValue, tweenEndValue, t);
+                    // calculate current tween value (linear interpolation)
+                    double t = (double) elapsedTime / tweenFrames;
+                    distance = lerp(tweenStart, tweenEnd, t);
                 }
             }
         }
@@ -181,9 +187,6 @@ public class MyWorld extends World {
         }
     }
     
-    /**
-     * Removes instruction objects from the world.
-     */
     private void removeInstructions() {
         removeObjects(getObjects(Instructions.class));
     }
