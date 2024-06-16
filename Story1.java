@@ -18,7 +18,7 @@ public class Story1 extends World
     
     public void act() {
         if (!MyWorld.started) {
-            if (timer.millisElapsed()>1000) {
+            if (timer.millisElapsed()>5000) {
                 Greenfoot.setWorld(new Story2());
             }
         }

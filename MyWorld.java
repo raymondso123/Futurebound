@@ -58,6 +58,10 @@ public class MyWorld extends World {
         // Add road overlay
         addObject(new RoadOverlay(), getWidth() / 2, 275);
        
+        
+        // Add road overlay (vert)
+        //addObject(new Lines(), getWidth() / 2 - 15, getHeight() / 2);
+        
         for (int i = 0; i < length; i++) {
             addObject(new Road(), getWidth()/2, getHeight() - i * 5);
         }

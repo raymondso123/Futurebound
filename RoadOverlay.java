@@ -13,7 +13,7 @@ public class RoadOverlay extends Actor {
      * Constructor initializes the road overlay with its image and initial scaling.
      */
     public RoadOverlay() {
-        image = new GreenfootImage("Line.png");
+        image = new GreenfootImage("Road.png");
         image.scale(5, 5); // Initial scaling of the overlay
         setImage(image);
         timer.mark(); // Start the timer
